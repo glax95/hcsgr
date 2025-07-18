@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>虎厨生骨肉喂食量计算器</title>
+    <title>虎厨生骨肉喂食量计算</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -24,40 +24,40 @@
         body {
             background: linear-gradient(135deg, #f9f0ff 0%, #e0f7ff 100%);
             min-height: 100vh;
-            padding: 15px;
+            padding: 10px;
             color: var(--text);
+            font-size: 14px;
         }
         
         .container {
             background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             width: 100%;
             max-width: 850px;
             margin: 0 auto;
             overflow: hidden;
-            position: relative;
         }
         
         .header {
             background: linear-gradient(to right, var(--primary), #3a7bd5);
             color: white;
-            padding: 20px 15px;
+            padding: 15px;
             text-align: center;
             position: relative;
             overflow: hidden;
         }
         
         .header h1 {
-            font-size: 1.8rem;
-            margin-bottom: 8px;
+            font-size: 1.4rem;
+            margin-bottom: 5px;
             position: relative;
             z-index: 2;
         }
         
         .cat-decoration {
             position: absolute;
-            font-size: 5rem;
+            font-size: 4rem;
             opacity: 0.15;
             z-index: 1;
             top: 50%;
@@ -65,11 +65,11 @@
         }
         
         .cat-1 {
-            left: 15px;
+            left: 10px;
         }
         
         .cat-2 {
-            right: 20px;
+            right: 15px;
         }
         
         .content {
@@ -79,21 +79,21 @@
         }
         
         .calculator {
-            padding: 20px;
+            padding: 15px;
             background: rgba(245, 251, 255, 0.7);
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             position: relative;
         }
         
         .form-group label {
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             font-weight: 600;
             color: var(--text);
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
         
         .input-container {
@@ -102,74 +102,69 @@
         
         .input-container i {
             position: absolute;
-            left: 12px;
+            left: 10px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--primary);
-            font-size: 1.1rem;
-        }
-        
-        .clear-input {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #ccc;
             font-size: 1rem;
-            cursor: pointer;
-            display: none;
         }
         
-        .clear-input:hover {
-            color: #999;
-        }
-        
-        input {
+        input, select {
             width: 100%;
-            padding: 12px 35px 12px 40px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1rem;
+            padding: 10px 10px 10px 35px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.9rem;
             transition: all 0.3s;
             color: var(--text);
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
         }
         
-        input:focus {
+        select {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 1rem;
+        }
+        
+        input:focus, select:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(90, 156, 255, 0.2);
+            box-shadow: 0 0 0 2px rgba(90, 156, 255, 0.2);
         }
         
         .error-message {
             color: var(--error);
-            font-size: 0.8rem;
-            margin-top: 5px;
+            font-size: 0.7rem;
+            margin-top: 3px;
             display: none;
         }
         
         .button-group {
             display: flex;
-            gap: 10px;
-            margin-top: 15px;
+            gap: 8px;
+            margin-top: 12px;
         }
         
         button {
             background: linear-gradient(to right, var(--primary), #3a7bd5);
             color: white;
             border: none;
-            padding: 12px 20px;
-            font-size: 1.1rem;
+            padding: 10px 15px;
+            font-size: 0.9rem;
             font-weight: 600;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(90, 156, 255, 0.4);
+            box-shadow: 0 3px 8px rgba(90, 156, 255, 0.3);
             flex: 1;
         }
         
         button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(90, 156, 255, 0.5);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(90, 156, 255, 0.4);
         }
         
         button.secondary {
@@ -184,22 +179,22 @@
         }
         
         .result {
-            padding: 20px;
+            padding: 15px;
             background: white;
-            scroll-margin-top: 20px;
+            scroll-margin-top: 15px;
         }
         
         .result-banner {
             background: linear-gradient(to right, #ff9a44, #ff6e7f);
             color: white;
-            padding: 10px 15px;
+            padding: 8px 12px;
             text-align: center;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: all 0.3s;
-            margin-bottom: 15px;
-            border-radius: 8px;
+            margin-bottom: 12px;
+            border-radius: 6px;
         }
         
         .result-banner:hover {
@@ -208,137 +203,124 @@
         
         .result-box {
             background: white;
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 10px;
+            padding: 15px;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
             display: flex;
             flex-direction: column;
             justify-content: center;
             transition: all 0.3s;
-            position: relative;
-        }
-        
-        .result-box:hover {
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
         
         .result-box h2 {
             color: var(--text);
-            margin-bottom: 15px;
-            font-size: 1.3rem;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
         }
         
         .meat-value, .calorie-value {
             font-weight: 800;
-            margin: 8px 0;
+            margin: 6px 0;
             transition: all 0.5s ease-out;
         }
         
         .meat-value {
-            font-size: 2rem;
+            font-size: 1.6rem;
             background: linear-gradient(to right, var(--secondary), #ff758c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
         .calorie-value {
-            font-size: 1.6rem;
+            font-size: 1.3rem;
             background: linear-gradient(to right, var(--primary), #3a7bd5);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
         .unit {
-            font-size: 1rem;
+            font-size: 0.8rem;
             color: #666;
-            margin-top: 3px;
+            margin-top: 2px;
         }
         
         .cat-stage {
-            margin-top: 12px;
-            font-size: 1.1rem;
+            margin-top: 10px;
+            font-size: 0.9rem;
             font-weight: 600;
             color: var(--primary);
         }
         
         .result-explanation {
-            margin-top: 15px;
-            padding: 15px;
+            margin-top: 12px;
+            padding: 12px;
             background: var(--light-bg);
-            border-radius: 8px;
+            border-radius: 6px;
             text-align: left;
-            font-size: 0.95rem;
-            line-height: 1.6;
+            font-size: 0.8rem;
+            line-height: 1.5;
         }
         
         .divider {
             height: 1px;
             background: linear-gradient(to right, var(--primary), var(--secondary));
-            margin: 15px 0;
+            margin: 12px 0;
             border-radius: 1px;
             width: 80%;
             align-self: center;
         }
         
-        .watermark {
-            margin-top: 15px;
-            font-size: 0.8rem;
-            color: #999;
-            text-align: center;
-            font-style: italic;
-        }
-        
         .feeding-tips {
             background: var(--light-bg);
-            padding: 20px 15px;
-            border-top: 2px solid #e6f0ff;
+            padding: 15px;
+            border-top: 1px solid #e6f0ff;
         }
         
         .feeding-tips h3 {
             color: var(--primary);
-            margin-bottom: 12px;
-            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-size: 1rem;
             text-align: center;
         }
         
         .tips-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-top: 8px;
+            gap: 10px;
+            margin-top: 6px;
         }
         
         .tip {
             background: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            border-left: 3px solid var(--primary);
+            padding: 12px;
+            border-radius: 6px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+            border-left: 2px solid var(--primary);
         }
         
         .tip h4 {
             color: var(--secondary);
-            margin-bottom: 8px;
-            font-size: 1rem;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         
         .tip p {
             color: #666;
-            font-size: 0.9rem;
-            line-height: 1.6;
+            font-size: 0.8rem;
+            line-height: 1.5;
         }
         
         .mixed-feeding-chart {
             display: flex;
-            height: 30px;
-            border-radius: 6px;
+            height: 20px;
+            border-radius: 4px;
             overflow: hidden;
-            margin: 10px 0;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin: 8px 0;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
         
         .meat-portion {
@@ -352,59 +334,27 @@
         .chart-label {
             display: flex;
             justify-content: space-between;
-            font-size: 0.8rem;
-            margin-top: 5px;
-        }
-        
-        .share-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        
-        .share-btn {
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .share-wechat {
-            background: #07C160;
-            color: white;
-        }
-        
-        .share-weibo {
-            background: #E6162D;
-            color: white;
-        }
-        
-        .share-link {
-            background: #f0f0f0;
-            color: var(--text);
+            font-size: 0.7rem;
+            margin-top: 3px;
         }
         
         .formula {
-            margin-top: 15px;
-            padding: 12px;
+            margin-top: 12px;
+            padding: 10px;
             background: #f8f8f8;
-            border-radius: 8px;
-            font-size: 0.85rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
             color: #666;
             text-align: center;
         }
         
         @media (min-width: 768px) {
             body {
-                padding: 20px;
+                padding: 15px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                font-size: 15px;
             }
             
             .content {
@@ -413,23 +363,23 @@
             
             .calculator, .result {
                 flex: 1;
-                padding: 30px;
+                padding: 20px;
             }
             
             .header h1 {
-                font-size: 2rem;
+                font-size: 1.6rem;
             }
             
             .meat-value {
-                font-size: 2.5rem;
-            }
-            
-            .calorie-value {
                 font-size: 2rem;
             }
             
+            .calorie-value {
+                font-size: 1.6rem;
+            }
+            
             .result-box {
-                padding: 25px;
+                padding: 20px;
             }
         }
     </style>
@@ -445,13 +395,15 @@
         <div class="content">
             <div class="calculator">
                 <div class="form-group">
-                    <label for="age"><i class="fas fa-cat"></i> 猫咪年龄（岁）</label>
+                    <label for="age"><i class="fas fa-cat"></i> 猫咪年龄阶段</label>
                     <div class="input-container">
                         <i class="fas fa-birthday-cake"></i>
-                        <input type="number" id="age" min="0.1" max="30" step="0.1" placeholder="请输入猫咪年龄" value="3">
-                        <span class="clear-input">&times;</span>
+                        <select id="age">
+                            <option value="0.5">1岁以下幼猫</option>
+                            <option value="3" selected>1-7岁壮年猫</option>
+                            <option value="8">7岁以上中老年猫</option>
+                        </select>
                     </div>
-                    <div class="error-message" id="age-error">请输入0.1到30之间的有效年龄</div>
                 </div>
                 
                 <div class="form-group">
@@ -459,7 +411,6 @@
                     <div class="input-container">
                         <i class="fas fa-weight-scale"></i>
                         <input type="number" id="weight" min="0.1" max="20" step="0.1" placeholder="请输入猫咪体重" value="4.5">
-                        <span class="clear-input">&times;</span>
                     </div>
                     <div class="error-message" id="weight-error">请输入0.1到20之间的有效体重</div>
                 </div>
@@ -480,7 +431,7 @@
             
             <div class="result" id="result-section">
                 <div class="result-banner" onclick="window.open('https://www.tmall.com')">
-                    🐾 天猫搜索"虎厨生骨肉"，灭菌原切肉丁，科学配比，猫咪长肉、美毛、提升免疫力 🐾
+                    🐾 天猫搜索"虎厨生骨肉"，灭菌原切肉丁，13种营养素添加，开袋即食 🐾
                 </div>
                 
                 <div class="result-box">
@@ -497,22 +448,6 @@
                     
                     <div class="result-explanation" id="result-explanation">
                         根据计算结果，您的猫咪每日需要摄入约 <strong>276千卡</strong> 热量，相当于 <strong>180克</strong> 生骨肉。建议将每日食物分成3-4餐喂食，并根据猫咪活动量适当调整。
-                    </div>
-                    
-                    <div class="share-buttons">
-                        <div class="share-btn share-wechat" onclick="shareResult('wechat')">
-                            <i class="fab fa-weixin"></i> 微信分享
-                        </div>
-                        <div class="share-btn share-weibo" onclick="shareResult('weibo')">
-                            <i class="fab fa-weibo"></i> 微博分享
-                        </div>
-                        <div class="share-btn share-link" onclick="copyLink()">
-                            <i class="fas fa-link"></i> 复制链接
-                        </div>
-                    </div>
-                    
-                    <div class="watermark">
-                        虎厨生骨肉喂食量计算器
                     </div>
                 </div>
             </div>
@@ -557,7 +492,7 @@
         let currentMeatAmount = 180;
         
         // DOM元素
-        const ageInput = document.getElementById('age');
+        const ageSelect = document.getElementById('age');
         const weightInput = document.getElementById('weight');
         const calculateBtn = document.getElementById('calculate-btn');
         const resetBtn = document.getElementById('reset-btn');
@@ -566,34 +501,12 @@
         const catStage = document.getElementById('cat-stage');
         const resultExplanation = document.getElementById('result-explanation');
         const mixedChart = document.getElementById('mixed-chart');
-        const clearInputs = document.querySelectorAll('.clear-input');
-        const ageError = document.getElementById('age-error');
         const weightError = document.getElementById('weight-error');
         const resultSection = document.getElementById('result-section');
         
-        // 输入框清除功能
-        ageInput.addEventListener('input', function() {
-            toggleClearButton(ageInput);
-            validateInput(ageInput, ageError, 0.1, 30);
-        });
-        
-        weightInput.addEventListener('input', function() {
-            toggleClearButton(weightInput);
-            validateInput(weightInput, weightError, 0.1, 20);
-        });
-        
-        clearInputs.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const input = this.parentElement.querySelector('input');
-                input.value = '';
-                this.style.display = 'none';
-                input.focus();
-            });
-        });
-        
         // 计算按钮点击事件
         calculateBtn.addEventListener('click', function() {
-            if(validateInputs()) {
+            if(validateInput()) {
                 calculate();
                 // 滚动到结果区域
                 resultSection.scrollIntoView({ behavior: 'smooth' });
@@ -602,16 +515,14 @@
         
         // 重置按钮点击事件
         resetBtn.addEventListener('click', function() {
-            ageInput.value = '';
+            ageSelect.value = '3';
             weightInput.value = '';
-            clearInputs.forEach(btn => btn.style.display = 'none');
-            ageError.style.display = 'none';
             weightError.style.display = 'none';
         });
         
         // 计算函数
         function calculate() {
-            const age = parseFloat(ageInput.value);
+            const age = parseFloat(ageSelect.value);
             const weight = parseFloat(weightInput.value);
             const meatCalPer100g = 153; // 固定值
             
@@ -625,10 +536,10 @@
                 stage = "幼猫 (<1岁)";
             } else if (age <= 7) {
                 factor = 1.2;
-                stage = "成年猫 (1-7岁)";
+                stage = "壮年猫 (1-7岁)";
             } else {
                 factor = 1.1;
-                stage = "老年猫 (>7岁)";
+                stage = "中老年猫 (>7岁)";
             }
             
             // 计算DER（每日能量需求）
@@ -690,52 +601,17 @@
         }
         
         // 验证输入
-        function validateInput(input, errorElement, min, max) {
-            const value = parseFloat(input.value);
-            if (isNaN(value) || value < min || value > max) {
-                errorElement.style.display = 'block';
-                input.style.borderColor = 'var(--error)';
+        function validateInput() {
+            const value = parseFloat(weightInput.value);
+            if (isNaN(value) || value < 0.1 || value > 20) {
+                weightError.style.display = 'block';
+                weightInput.style.borderColor = 'var(--error)';
                 return false;
             } else {
-                errorElement.style.display = 'none';
-                input.style.borderColor = '#e0e0e0';
+                weightError.style.display = 'none';
+                weightInput.style.borderColor = '#e0e0e0';
                 return true;
             }
-        }
-        
-        function validateInputs() {
-            const ageValid = validateInput(ageInput, ageError, 0.1, 30);
-            const weightValid = validateInput(weightInput, weightError, 0.1, 20);
-            return ageValid && weightValid;
-        }
-        
-        // 显示/隐藏清除按钮
-        function toggleClearButton(input) {
-            const clearBtn = input.nextElementSibling;
-            clearBtn.style.display = input.value ? 'block' : 'none';
-        }
-        
-        // 分享功能
-        function shareResult(platform) {
-            const calories = currentCalories;
-            const meatAmount = currentMeatAmount;
-            const stage = catStage.textContent;
-            
-            let shareText = `我的猫咪每日需要摄入约 ${calories}千卡 热量，相当于 ${meatAmount}克 生骨肉（${stage}）。`;
-            shareText += ` 使用猫咪热量计算器：${window.location.href}`;
-            
-            if(platform === 'wechat') {
-                alert('请使用微信"扫一扫"分享此页面');
-            } else if(platform === 'weibo') {
-                window.open(`https://service.weibo.com/share/share.php?url=${encodeURIComponent(window.location.href)}&title=${encodeURIComponent(shareText)}`);
-            }
-        }
-        
-        // 复制链接
-        function copyLink() {
-            navigator.clipboard.writeText(window.location.href).then(() => {
-                alert('链接已复制到剪贴板');
-            });
         }
         
         // 初始化计算
