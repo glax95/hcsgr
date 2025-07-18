@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>虎厨生骨肉喂食量计算器</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #5a9cff;
+            --secondary: #ff7eb3;
+            --text: #4a4a4a;
+            --light-bg: #f8fbff;
+            --error: #ff4d4f;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f9f0ff 0%, #e0f7ff 100%);
+            min-height: 100vh;
+            padding: 15px;
+            color: var(--text);
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 850px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .banner {
+            background: linear-gradient(to right, #ff9a44, #ff6e7f);
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .banner:hover {
+            background: linear-gradient(to right, #ff8a34, #ff5e6f);
+        }
+        
+        .header {
+            background: linear-gradient(to right, var(--primary), #3a7bd5);
+            color: white;
+            padding: 20px 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cat-decoration {
+            position: absolute;
+            font-size: 5rem;
+            opacity: 0.15;
+            z-index: 1;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .cat-1 {
+            left: 15px;
+        }
+        
+        .cat-2 {
+            right: 20px;
+        }
+        
+        .content {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
+        
+        .calculator {
+            padding: 20px;
+            background: rgba(245, 251, 255, 0.7);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: var(--text);
+            font-size: 1rem;
+        }
+        
+        .input-container {
+            position: relative;
+        }
+        
+        .input-container i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        
+        .clear-input {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ccc;
+            font-size: 1rem;
+            cursor: pointer;
+            display: none;
+        }
+        
+        .clear-input:hover {
+            color: #999;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px 35px 12px 40px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            color: var(--text);
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(90, 156, 255, 0.2);
+        }
+        
+        .error-message {
+            color: var(--error);
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        button {
+            background: linear-gradient(to right, var(--primary), #3a7bd5);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(90, 156, 255, 0.4);
+            flex: 1;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(90, 156, 255, 0.5);
+        }
+        
+        button.secondary {
+            background: #f0f0f0;
+            color: var(--text);
+            box-shadow: none;
+        }
+        
+        button.secondary:hover {
+            background: #e0e0e0;
+            transform: none;
+        }
+        
+        .result {
+            padding: 20px;
+            background: white;
+            scroll-margin-top: 20px;
+        }
+        
+        .result-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .result-box:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .result-box h2 {
+            color: var(--text);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .meat-value, .calorie-value {
+            font-weight: 800;
+            margin: 8px 0;
+            transition: all 0.5s ease-out;
+        }
+        
+        .meat-value {
+            font-size: 2rem;
+            background: linear-gradient(to right, var(--secondary), #ff758c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .calorie-value {
+            font-size: 1.6rem;
+            background: linear-gradient(to right, var(--primary), #3a7bd5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .unit {
+            font-size: 1rem;
+            color: #666;
+            margin-top: 3px;
+        }
+        
+        .cat-stage {
+            margin-top: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .result-explanation {
+            margin-top: 15px;
+            padding: 15px;
+            background: var(--light-bg);
+            border-radius: 8px;
+            text-align: left;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            margin: 15px 0;
+            border-radius: 1px;
+            width: 80%;
+            align-self: center;
+        }
+        
+        .feeding-tips {
+            background: var(--light-bg);
+            padding: 20px 15px;
+            border-top: 2px solid #e6f0ff;
+        }
+        
+        .feeding-tips h3 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        
+        .tips-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        
+        .tip {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-left: 3px solid var(--primary);
+        }
+        
+        .tip h4 {
+            color: var(--secondary);
+            margin-bottom: 8px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tip p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .mixed-feeding-chart {
+            display: flex;
+            height: 30px;
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 10px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .meat-portion {
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+        }
+        
+        .food-portion {
+            background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+        }
+        
+        .chart-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+        
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .share-btn {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .share-wechat {
+            background: #07C160;
+            color: white;
+        }
+        
+        .share-weibo {
+            background: #E6162D;
+            color: white;
+        }
+        
+        .share-link {
+            background: #f0f0f0;
+            color: var(--text);
+        }
+        
+        .formula {
+            margin-top: 15px;
+            padding: 12px;
+            background: #f8f8f8;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #666;
+            text-align: center;
+        }
+        
+        @media (min-width: 768px) {
+            body {
+                padding: 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            
+            .content {
+                flex-direction: row;
+            }
+            
+            .calculator, .result {
+                flex: 1;
+                padding: 30px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .meat-value {
+                font-size: 2.5rem;
+            }
+            
+            .calorie-value {
+                font-size: 2rem;
+            }
+            
+            .result-box {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="banner" onclick="window.open('https://huchucwsp.tmall.com/')">
+            🐾 猫咪长肉、美毛、补水、提高免疫力，快去天猫搜索"虎厨生骨肉" 🐾
+        </div>
+        
+        <div class="header">
+            <i class="fas fa-cat cat-decoration cat-1"></i>
+            <i class="fas fa-paw cat-decoration cat-2"></i>
+            <h1>🐱 虎厨生骨肉喂食量计算器</h1>
+        </div>
+        
+        <div class="content">
+            <div class="calculator">
+                <div class="form-group">
+                    <label for="age"><i class="fas fa-cat"></i> 猫咪年龄（岁）</label>
+                    <div class="input-container">
+                        <i class="fas fa-birthday-cake"></i>
+                        <input type="number" id="age" min="0.1" max="30" step="0.1" placeholder="请输入猫咪年龄" value="3">
+                        <span class="clear-input">&times;</span>
+                    </div>
+                    <div class="error-message" id="age-error">请输入0.1到30之间的有效年龄</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="weight"><i class="fas fa-weight-hanging"></i> 猫咪体重（kg）</label>
+                    <div class="input-container">
+                        <i class="fas fa-weight-scale"></i>
+                        <input type="number" id="weight" min="0.1" max="20" step="0.1" placeholder="请输入猫咪体重" value="4.5">
+                        <span class="clear-input">&times;</span>
+                    </div>
+                    <div class="error-message" id="weight-error">请输入0.1到20之间的有效体重</div>
+                </div>
+                
+                <div class="formula">
+                    <p><strong>注意：</strong> 肉的热量按虎厨生骨肉低敏配方计算（153千卡/100g），其他配方和肉类热量详询天猫店客服</p>
+                </div>
+                
+                <div class="button-group">
+                    <button id="calculate-btn">
+                        <i class="fas fa-calculator"></i> 计算
+                    </button>
+                    <button id="reset-btn" class="secondary">
+                        <i class="fas fa-redo"></i> 重置
+                    </button>
+                </div>
+            </div>
+            
+            <div class="result" id="result-section">
+                <div class="result-box">
+                    <h2>每日建议肉量</h2>
+                    <div class="meat-value" id="meat-result">180</div>
+                    <div class="unit">克 / 天</div>
+                    
+                    <div class="divider"></div>
+                    
+                    <h2>每日所需热量</h2>
+                    <div class="calorie-value" id="calorie-result">276</div>
+                    <div class="unit">千卡 / 天</div>
+                    <div class="cat-stage" id="cat-stage">成年猫 (1-7岁)</div>
+                    
+                    <div class="result-explanation" id="result-explanation">
+                        根据计算结果，您的猫咪每日需要摄入约 <strong>276千卡</strong> 热量，相当于 <strong>180克</strong> 生骨肉。建议将每日食物分成3-4餐喂食，并根据猫咪活动量适当调整。
+                    </div>
+                    
+                    <div class="share-buttons">
+                        <div class="share-btn share-wechat" onclick="shareResult('wechat')">
+                            <i class="fab fa-weixin"></i> 微信分享
+                        </div>
+                        <div class="share-btn share-weibo" onclick="shareResult('weibo')">
+                            <i class="fab fa-weibo"></i> 微博分享
+                        </div>
+                        <div class="share-btn share-link" onclick="copyLink()">
+                            <i class="fas fa-link"></i> 复制链接
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="feeding-tips">
+            <h3><i class="fas fa-utensils"></i> 科学喂养建议</h3>
+            <div class="tips-list">
+                <div class="tip">
+                    <h4><i class="fas fa-clock"></i> 喂食频率与分量控制</h4>
+                    <p>成年猫建议每日3-4餐，幼猫(1岁以下)4-6餐，老年猫(7岁以上)3-4餐。每餐间隔4-6小时，避免自由采食。使用厨房秤精确称量食物，避免过量喂食导致肥胖。转换饮食时应循序渐进，用7-10天时间逐步增加新食物比例。</p>
+                </div>
+                
+                <div class="tip">
+                    <h4><i class="fas fa-blender"></i> 混合喂养营养搭配</h4>
+                    <p>如果采用混合喂养(生骨肉+猫粮/罐头)，建议生骨肉占比不低于总食量的30%。100g生骨肉约提供153千卡热量，其余热量需从其他食物补充。例如：猫咪每日需276千卡，喂100g生骨肉(153千卡)后，剩余123千卡需从猫粮补充(约35g猫粮，按350千卡/100g计算)。</p>
+                    
+                    <div class="mixed-feeding-chart" id="mixed-chart">
+                        <div class="meat-portion" style="width: 55%"></div>
+                        <div class="food-portion" style="width: 45%"></div>
+                    </div>
+                    <div class="chart-label">
+                        <span>生骨肉 55%</span>
+                        <span>猫粮 45%</span>
+                    </div>
+                </div>
+                
+                <div class="tip">
+                    <h4><i class="fas fa-exclamation-triangle"></i> 特殊情况调整建议</h4>
+                    <p><strong>孕猫/哺乳期母猫：</strong> 热量需求为正常值的2-4倍，需增加蛋白质和钙质摄入。<br>
+                    <strong>大活动量猫咪：</strong> 户外猫或活跃品种(如孟加拉猫)可增加20-50%热量。<br>
+                    <strong>减肥猫咪：</strong> 减少15-20%热量，增加蛋白质比例，减少碳水化合物。<br>
+                    <strong>老年猫(7岁以上)：</strong> 适量减少热量(约10%)，增加易消化蛋白质和水分摄入。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 初始化变量
+        let currentCalories = 276;
+        let currentMeatAmount = 180;
+        
+        // DOM元素
+        const ageInput = document.getElementById('age');
+        const weightInput = document.getElementById('weight');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const calorieResult = document.getElementById('calorie-result');
+        const meatResult = document.getElementById('meat-result');
+        const catStage = document.getElementById('cat-stage');
+        const resultExplanation = document.getElementById('result-explanation');
+        const mixedChart = document.getElementById('mixed-chart');
+        const clearInputs = document.querySelectorAll('.clear-input');
+        const ageError = document.getElementById('age-error');
+        const weightError = document.getElementById('weight-error');
+        const resultSection = document.getElementById('result-section');
+        
+        // 输入框清除功能
+        ageInput.addEventListener('input', function() {
+            toggleClearButton(ageInput);
+            validateInput(ageInput, ageError, 0.1, 30);
+        });
+        
+        weightInput.addEventListener('input', function() {
+            toggleClearButton(weightInput);
+            validateInput(weightInput, weightError, 0.1, 20);
+        });
+        
+        clearInputs.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const input = this.parentElement.querySelector('input');
+                input.value = '';
+                this.style.display = 'none';
+                input.focus();
+            });
+        });
+        
+        // 计算按钮点击事件
+        calculateBtn.addEventListener('click', function() {
+            if(validateInputs()) {
+                calculate();
+                // 滚动到结果区域
+                resultSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        
+        // 重置按钮点击事件
+        resetBtn.addEventListener('click', function() {
+            ageInput.value = '';
+            weightInput.value = '';
+            clearInputs.forEach(btn => btn.style.display = 'none');
+            ageError.style.display = 'none';
+            weightError.style.display = 'none';
+        });
+        
+        // 计算函数
+        function calculate() {
+            const age = parseFloat(ageInput.value);
+            const weight = parseFloat(weightInput.value);
+            const meatCalPer100g = 153; // 固定值
+            
+            // 计算RER（静息能量需求）
+            const rer = 70 * Math.pow(weight, 0.75);
+            
+            // 根据年龄确定系数
+            let factor, stage;
+            if (age < 1) {
+                factor = 2.5;
+                stage = "幼猫 (<1岁)";
+            } else if (age <= 7) {
+                factor = 1.2;
+                stage = "成年猫 (1-7岁)";
+            } else {
+                factor = 1.1;
+                stage = "老年猫 (>7岁)";
+            }
+            
+            // 计算DER（每日能量需求）
+            const der = Math.round(rer * factor);
+            
+            // 计算每日所需肉量
+            const meatAmount = Math.round((der / meatCalPer100g) * 100);
+            
+            // 更新当前值用于动画
+            animateValue(calorieResult, currentCalories, der, 1000);
+            animateValue(meatResult, currentMeatAmount, meatAmount, 1000);
+            
+            // 更新当前值
+            currentCalories = der;
+            currentMeatAmount = meatAmount;
+            
+            // 更新其他显示
+            catStage.textContent = stage;
+            
+            // 更新结果解释
+            resultExplanation.innerHTML = `根据计算结果，您的猫咪每日需要摄入约 <strong>${der}千卡</strong> 热量，相当于 <strong>${meatAmount}克</strong> 生骨肉。建议将每日食物分成3-4餐喂食，并根据猫咪活动量适当调整。`;
+            
+            // 更新混合喂养图表
+            updateMixedChart(der);
+        }
+        
+        // 数字动画效果
+        function animateValue(element, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                element.textContent = value;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+        
+        // 更新混合喂养图表
+        function updateMixedChart(totalCalories) {
+            const meatCalories = 153; // 100g生骨肉
+            const meatPercentage = Math.min(Math.round((meatCalories / totalCalories) * 100), 100);
+            const foodPercentage = 100 - meatPercentage;
+            
+            mixedChart.innerHTML = `
+                <div class="meat-portion" style="width: ${meatPercentage}%"></div>
+                <div class="food-portion" style="width: ${foodPercentage}%"></div>
+            `;
+            
+            // 更新图表标签
+            const chartLabel = mixedChart.nextElementSibling;
+            chartLabel.innerHTML = `
+                <span>生骨肉 ${meatPercentage}%</span>
+                <span>猫粮 ${foodPercentage}%</span>
+            `;
+        }
+        
+        // 验证输入
+        function validateInput(input, errorElement, min, max) {
+            const value = parseFloat(input.value);
+            if (isNaN(value) || value < min || value > max) {
+                errorElement.style.display = 'block';
+                input.style.borderColor = 'var(--error)';
+                return false;
+            } else {
+                errorElement.style.display = 'none';
+                input.style.borderColor = '#e0e0e0';
+                return true;
+            }
+        }
+        
+        function validateInputs() {
+            const ageValid = validateInput(ageInput, ageError, 0.1, 30);
+            const weightValid = validateInput(weightInput, weightError, 0.1, 20);
+            return ageValid && weightValid;
+        }
+        
+        // 显示/隐藏清除按钮
+        function toggleClearButton(input) {
+            const clearBtn = input.nextElementSibling;
+            clearBtn.style.display = input.value ? 'block' : 'none';
+        }
+        
+        // 分享功能
+        function shareResult(platform) {
+            const calories = currentCalories;
+            const meatAmount = currentMeatAmount;
+            const stage = catStage.textContent;
+            
+            let shareText = `我的猫咪每日需要摄入约 ${calories}千卡 热量，相当于 ${meatAmount}克 生骨肉（${stage}）。`;
+            shareText += ` 使用猫咪热量计算器：${window.location.href}`;
+            
+            if(platform === 'wechat') {
+                alert('请使用微信"扫一扫"分享此页面');
+            } else if(platform === 'weibo') {
+                window.open(`https://service.weibo.com/share/share.php?url=${encodeURIComponent(window.location.href)}&title=${encodeURIComponent(shareText)}`);
+            }
+        }
+        
+        // 复制链接
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('链接已复制到剪贴板');
+            });
+        }
+        
+        // 初始化计算
+        calculate();
+    </script>
+</body>
+</html>
