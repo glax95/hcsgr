@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>虎厨生骨肉喂食量计算器</title>
+    <title>猫咪热量与肉量计算器</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -37,21 +37,6 @@
             margin: 0 auto;
             overflow: hidden;
             position: relative;
-        }
-        
-        .banner {
-            background: linear-gradient(to right, #ff9a44, #ff6e7f);
-            color: white;
-            padding: 10px 15px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .banner:hover {
-            background: linear-gradient(to right, #ff8a34, #ff5e6f);
         }
         
         .header {
@@ -204,6 +189,23 @@
             scroll-margin-top: 20px;
         }
         
+        .result-banner {
+            background: linear-gradient(to right, #ff9a44, #ff6e7f);
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+        
+        .result-banner:hover {
+            background: linear-gradient(to right, #ff8a34, #ff5e6f);
+        }
+        
         .result-box {
             background: white;
             border-radius: 12px;
@@ -214,6 +216,7 @@
             flex-direction: column;
             justify-content: center;
             transition: all 0.3s;
+            position: relative;
         }
         
         .result-box:hover {
@@ -276,6 +279,14 @@
             border-radius: 1px;
             width: 80%;
             align-self: center;
+        }
+        
+        .watermark {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #999;
+            text-align: center;
+            font-style: italic;
         }
         
         .feeding-tips {
@@ -425,14 +436,10 @@
 </head>
 <body>
     <div class="container">
-        <div class="banner" onclick="window.open('https://huchucwsp.tmall.com/')">
-            🐾 猫咪长肉、美毛、补水、提高免疫力，快去天猫搜索"虎厨生骨肉" 🐾
-        </div>
-        
         <div class="header">
             <i class="fas fa-cat cat-decoration cat-1"></i>
             <i class="fas fa-paw cat-decoration cat-2"></i>
-            <h1>🐱 虎厨生骨肉喂食量计算器</h1>
+            <h1>🐱 猫咪热量与肉量计算器</h1>
         </div>
         
         <div class="content">
@@ -458,7 +465,7 @@
                 </div>
                 
                 <div class="formula">
-                    <p><strong>注意：</strong> 肉的热量按虎厨生骨肉低敏配方计算（153千卡/100g），其他配方和肉类热量详询天猫店客服</p>
+                    <p><strong>计算公式：</strong> 每日热量 = 70 × 体重<sup>0.75</sup> × 年龄系数</p>
                 </div>
                 
                 <div class="button-group">
@@ -472,6 +479,10 @@
             </div>
             
             <div class="result" id="result-section">
+                <div class="result-banner" onclick="window.open('https://www.tmall.com')">
+                    🐾 猫咪长肉、美毛、补水、提高免疫力，快去天猫搜索"虎厨生骨肉" 🐾
+                </div>
+                
                 <div class="result-box">
                     <h2>每日建议肉量</h2>
                     <div class="meat-value" id="meat-result">180</div>
@@ -498,6 +509,10 @@
                         <div class="share-btn share-link" onclick="copyLink()">
                             <i class="fas fa-link"></i> 复制链接
                         </div>
+                    </div>
+                    
+                    <div class="watermark">
+                        虎厨生骨肉喂食量计算器
                     </div>
                 </div>
             </div>
